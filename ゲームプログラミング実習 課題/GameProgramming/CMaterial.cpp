@@ -24,7 +24,7 @@ CMaterial::CMaterial(CModelX *model)
 		strcpy(mName, model->mToken);
 		model->GetToken();	//{
 	}
-	printf("Material\n");
+	printf("%s\n",mName);
 	mDiffuse[0] = model->GetFloatToken();
 	mDiffuse[1] = model->GetFloatToken();
 	mDiffuse[2] = model->GetFloatToken();

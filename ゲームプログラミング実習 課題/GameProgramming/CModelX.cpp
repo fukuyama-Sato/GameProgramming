@@ -307,7 +307,15 @@ void CMesh::Init(CModelX *model){
 			}
 			model->GetToken();	// } //End of MeshMaterialList
 		}
-
+		//SkinWeightsのとき
+		else if (strcmp(model->mToken, "SkinWeights") == 0){
+			//CSkinWeightsクラスのインスタンスを作成し、配列に追加
+			mSkinWeights.push_back(new CSkinWeights(model));
+		}
+		else {
+			//以外のノードは読み飛ばし
+			model->SkipNode();
+		}
 	}
 }
 
@@ -341,4 +349,52 @@ void CModelX::Render(){
 	for (int i = 0; i < mFrame.size(); i++){
 		mFrame[i]->Render();
 	}
+}
+
+/*
+class CSkinWeights
+*/
+/* CSkinWeights
+スキンウェイトの読み込み*/
+CSkinWeights::CSkinWeights(CModelX *model)
+:mpFrameName(0)
+, mFrameIndex(0)
+, mIndexNum(0)
+, mpIndex(nullptr)
+, mpWeight(nullptr)
+{
+	model->GetToken();	//{
+	model->GetToken();	// FrameName
+	//フレーム名エリア確保,設定
+	mpFrameName = new char[strlen(model->mToken) + 1];
+	strcpy(mpFrameName, model->mToken);
+	printf("SkinWeights\ %s\n", mpFrameName);
+	//頂点番号数取得
+	mIndexNum = model->GetIntToken();
+	//頂点番号数が0を超える
+	if (mIndexNum > 0){
+		//頂点番号と頂点ウェイトのエリア確保
+		mpIndex = new int[mIndexNum];
+		mpWeight = new float[mIndexNum];
+		//頂点番号取得
+		for (int i = 0; i < mIndexNum; i++)
+			mpIndex[i] = model->GetIntToken();
+		//頂点ウェイト取得
+		for (int i = 0; i < mIndexNum; i++)
+			mpWeight[i] = model->GetFloatToken();
+
+		for (int i = 0; i < mIndexNum; i++){
+			printf("%d", mpIndex[i]);
+			printf("%10f\n", mpWeight[i]);
+		}
+	}
+	//オフセット行列取得
+	for (int i = 0; i < 16; i++){
+		mOffset.mF[i] = model->GetFloatToken();
+		printf("%10f", mOffset.mF[i]);
+		if (i == 3 || i == 7 || i == 11 || i == 15){
+			printf("\n");
+		}
+	}
+	model->GetToken();	//}
 }
