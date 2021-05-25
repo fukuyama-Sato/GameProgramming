@@ -43,11 +43,8 @@ void CModelX::Load(char *file){
 			//フレームを作成する
 			new CModelXFrame(this);
 		}
-		//単語がAnimationSetの場合
-		if (strcmp(mToken, "AnimationSet") == 0){
-			printf("%s", mToken);	//AnimationSet出力
-			GetToken();				//AnimationSet名を取得
-			printf("%s\n", mToken);	//AnimationSet名を出力
+		else if (strcmp(mToken, "AnimationSet") == 0){
+			new CAnimationSet(this);
 		}
 	}
 
@@ -397,4 +394,26 @@ CSkinWeights::CSkinWeights(CModelX *model)
 		}
 	}
 	model->GetToken();	//}
+}
+
+/* class CAnimationSet*/
+/*CAnimationSet*/
+CAnimationSet::CAnimationSet(CModelX *model)
+:mpName(nullptr)
+{
+	model->mAnimationSet.push_back(this);
+	model->GetToken();	// Animation Name
+	//アニメーションセット名を退避
+	mpName = new char[strlen(model->mToken) + 1];
+	strcpy(mpName, model->mToken);
+	printf("Animation:%s\n", mpName);
+	model->GetToken();	// {
+	while (*model->mpPointer != '\0'){
+		model->GetToken(); // } または Animation
+		if (strchr(model->mToken, '}'))break;
+		if (strcmp(model->mToken, "Animation") == 0){
+			//読み飛ばし
+			model->SkipNode();
+		}
+	}
 }

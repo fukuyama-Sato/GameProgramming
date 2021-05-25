@@ -35,6 +35,21 @@ public:
 	}
 };
 
+/* CAnimationSet
+アニメーションセット*/
+class CAnimationSet{
+public:
+	//アニメーションセット名
+	char *mpName;
+
+	CAnimationSet(CModelX *model);
+
+	~CAnimationSet(){
+		SAFE_DELETE_ARRAY(mpName);
+	}
+};
+
+
 class CMesh{
 public:
 	int mVertexNum;		//頂点数
@@ -121,6 +136,9 @@ public:
 	char mToken[1024];	//取り出した単語の領域
 	std::vector<CModelXFrame*>mFrame;	//フレームの配列
 
+	//アニメーションセットの配列
+	std::vector<CAnimationSet*> mAnimationSet;
+
 	CModelX()
 	:mpPointer(nullptr)
 	{}
@@ -128,6 +146,9 @@ public:
 	~CModelX(){
 		if (mFrame.size() > 0){
 			delete mFrame[0];
+		}
+		for (int i = 0; i < mAnimationSet.size(); i++){
+			delete mAnimationSet[i];
 		}
 	}
 
