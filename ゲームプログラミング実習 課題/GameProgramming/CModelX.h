@@ -35,6 +35,20 @@ public:
 	}
 };
 
+/* CAnimation
+アニメーションクラス*/
+class CAnimation{
+public:
+	char *mpFrameName;	//フレーム名
+	int mFrameIndex;	//フレーム番号
+
+	CAnimation(CModelX *model);
+
+	~CAnimation(){
+		SAFE_DELETE_ARRAY(mpFrameName);
+	}
+};
+
 /* CAnimationSet
 アニメーションセット*/
 class CAnimationSet{
@@ -43,13 +57,19 @@ public:
 	char *mpName;
 
 	CAnimationSet(CModelX *model);
+	std::vector<CAnimation*> mAnimation;
 
 	~CAnimationSet(){
 		SAFE_DELETE_ARRAY(mpName);
+		//アニメーション要素の削除
+		for (int i = 0; i < mAnimation.size(); i++){
+			delete mAnimation[i];
+		}
 	}
 };
 
-
+/* CMesh
+ メッシュクラス*/
 class CMesh{
 public:
 	int mVertexNum;		//頂点数
@@ -102,6 +122,8 @@ public:
 	void Render();
 };
 
+/* CModelXFrame
+ モデルXフレームクラス*/
 class CModelXFrame{
 public:
 	std::vector<CModelXFrame*>mChild;	//子フレームの配列
@@ -124,7 +146,6 @@ public:
 	}
 	void Render();
 };
-
 
 /*
 CModelX
@@ -164,6 +185,9 @@ public:
 	float GetFloatToken();
 	//整数データの取得
 	int GetIntToken();
+	//フレーム名に該当するフレームのアドレスを返す
+	CModelXFrame* FindFrame(char* name);
+
 };
 
 #endif

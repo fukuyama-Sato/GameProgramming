@@ -110,6 +110,8 @@ void CModelX::SkipNode(){
 	}
 }
 
+
+/* class CModelXFrame*/
 /*CModelXFrame
   model::CModelXインスタンスへのポインタ
   フレームを作成する
@@ -180,6 +182,8 @@ void CModelXFrame::Render(){
 		mMesh.Render();
 }
 
+
+/* class CModelX*/
 /*GetFloatToken
   単語を浮動小数点型のデータで返す*/
 float CModelX::GetFloatToken(){
@@ -194,6 +198,23 @@ float CModelX::GetFloatToken(){
 int CModelX::GetIntToken(){
 	GetToken();
 	return atoi(mToken);
+}
+
+/*FindFrame
+  フレーム名に該当するフレームのアドレスを返す*/
+CModelXFrame* CModelX::FindFrame(char* name){
+	//イテレータの作成
+	std::vector<CModelXFrame*>::iterator itr;
+	//先頭から最後まで繰り返す
+	for (itr = mFrame.begin(); itr != mFrame.end(); itr++){
+		//名前が一致しているか
+		if (strcmp(name, (*itr)->mpName) == 0){
+			//一致していたらそのアドレスを返す
+			return *itr;
+		}
+	}
+	//一致するフレームが無い場合はNULLを返す
+	return NULL;
 }
 
 /*Init
@@ -348,10 +369,9 @@ void CModelX::Render(){
 	}
 }
 
-/*
-class CSkinWeights
-*/
-/* CSkinWeights
+
+/* class CSkinWeights*/
+/*CSkinWeights
 スキンウェイトの読み込み*/
 CSkinWeights::CSkinWeights(CModelX *model)
 :mpFrameName(0)
@@ -396,8 +416,9 @@ CSkinWeights::CSkinWeights(CModelX *model)
 	model->GetToken();	//}
 }
 
+
 /* class CAnimationSet*/
-/*CAnimationSet*/
+/*CAnimationSet　コンストラクタ*/
 CAnimationSet::CAnimationSet(CModelX *model)
 :mpName(nullptr)
 {
@@ -412,7 +433,39 @@ CAnimationSet::CAnimationSet(CModelX *model)
 		model->GetToken(); // } または Animation
 		if (strchr(model->mToken, '}'))break;
 		if (strcmp(model->mToken, "Animation") == 0){
-			//読み飛ばし
+			//Animation要素読み込み
+			mAnimation.push_back(new CAnimation(model));
+		}
+	}
+}
+
+
+/* class CAnimation*/
+/*CAnimation コンストラクタ*/
+CAnimation::CAnimation(CModelX *model)
+:mpFrameName(0)
+,mFrameIndex(0)
+{
+	model->GetToken();	//{ or Animation Name
+	if (strchr(model->mToken, '{')){
+		model->GetToken();	//{
+	}
+	else{
+		model->GetToken();	//{
+		model->GetToken();	//{
+	}
+
+	model->GetToken();	//FrameName
+	mpFrameName = new char[strlen(model->mToken) + 1];
+	strcpy(mpFrameName, model->mToken);
+	printf("Animation:%s\n",mpFrameName);
+	mFrameIndex = model->FindFrame(model->mToken)->mIndex;
+	model->GetToken();	// }
+
+	while (*model->mpPointer != '\0'){
+		model->GetToken();	// } か AnimationKey
+		if (strchr(model->mToken, '}'))break;
+		if (strcmp(model->mToken, "AnimationKey") == 0){
 			model->SkipNode();
 		}
 	}
