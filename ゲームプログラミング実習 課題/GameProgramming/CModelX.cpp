@@ -175,6 +175,17 @@ CModelXFrame::CModelXFrame(CModelX* model){
 	
 }
 
+/* AnimateCombined
+   合成行列の作成　*/
+void CModelXFrame::AnimateCombined(CMatrix* parent){
+	//自分の変換行列に、親からの変換行列をかける
+	mCombinedMatrix = mTransformMatrix * (*parent);
+	//子フレームの合成行列を作成する
+	for (int i = 0; i < mChild.size(); i++){
+		mChild[i]->AnimateCombined(&mCombinedMatrix);
+	}
+}
+
 /*Render
  メッシュの面数が0以外なら描画する*/
 void CModelXFrame::Render(){
@@ -263,15 +274,6 @@ void CModelX::AnimateFrame(){
 					}
 				}
 			}
-#ifdef _DEBUG
-				printf("Frame:%s\n", frame->mpName);
-				for (int n = 0; n < 4; n++){
-					for (int t = 0; t < 4; t++){
-						printf("%10f", frame->mTransformMatrix.mM[n][t]);
-						if (t == 3)printf("\n");
-					}
-				}
-#endif
 		}
 	}
 

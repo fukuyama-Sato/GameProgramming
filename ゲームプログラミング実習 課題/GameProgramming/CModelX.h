@@ -146,6 +146,7 @@ class CModelXFrame{
 public:
 	std::vector<CModelXFrame*>mChild;	//子フレームの配列
 	CMatrix mTransformMatrix;	//変換行列
+	CMatrix mCombinedMatrix;
 	CMesh mMesh;	//Meshデータ
 
 	char* mpName;	//フレーム名前
@@ -162,6 +163,8 @@ public:
 		//名前のエリアを解放する
 		SAFE_DELETE_ARRAY(mpName);
 	}
+	void AnimateCombined(CMatrix* parent);
+
 	void Render();
 };
 
