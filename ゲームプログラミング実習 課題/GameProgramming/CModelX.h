@@ -70,6 +70,10 @@ public:
 	//アニメーションセット名
 	char *mpName;
 
+	float mTime;	//現在時間
+	float mWeight;	//重み
+	float mMaxTime;	//最大時間
+
 	CAnimationSet(CModelX *model);
 	std::vector<CAnimation*> mAnimation;
 
@@ -194,6 +198,9 @@ public:
 	void SkipNode();
 	//描画
 	void Render();
+
+	void AnimateFrame();
+
 	//浮動小数点データの取得
 	float GetFloatToken();
 	//整数データの取得

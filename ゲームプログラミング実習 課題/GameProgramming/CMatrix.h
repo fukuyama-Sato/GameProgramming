@@ -45,6 +45,18 @@ public:
 	//CMatrix * CMatrix の演算結果を返す
 	CMatrix operator*(const CMatrix &m);
 
+	//*演算子のオーバーロード
+	//CMatrix * float の演算結果を返す
+	CMatrix operator*(const float &f);
+
+	//+演算子のオーバーロード
+	//CMatrix1 + CMatrix2 の演算結果を返す
+	CMatrix operator+(const CMatrix &m);
+
+	//+=演算子のオーバーロード
+	//CMAtrix1 += CMatrix2 の演算子を行う
+	void operator+=(const CMatrix &m);
+
 	//クオータニオンで回転行列を設定
 	CMatrix SetQuatenion(float x, float y, float z, float w);
 };
