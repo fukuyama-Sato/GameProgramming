@@ -104,6 +104,9 @@ public:
 	int *mpMaterialIndex;	//マテリアル番号
 	std::vector<CMaterial*> mMaterial;	//マテリアルデータ
 
+	CVector *mpAnimateVertex;	//アニメーション用頂点
+	CVector *mpAnimateNormal;	//アニメーション用法線
+
 	//スキンウェイト
 	std::vector<CSkinWeights*>mSkinWeights;
 
@@ -121,6 +124,9 @@ public:
 		, mMaterialNum(0)
 		, mMaterialIndexNum(0)
 		, mpMaterialIndex(nullptr)
+
+		, mpAnimateVertex(nullptr)
+		, mpAnimateNormal(nullptr)
 	{}
 	//デストラクタ
 	~CMesh(){
@@ -128,6 +134,8 @@ public:
 		SAFE_DELETE_ARRAY(mpVertexIndex);
 		SAFE_DELETE_ARRAY(mpNormal);
 		SAFE_DELETE_ARRAY(mpMaterialIndex);
+		SAFE_DELETE_ARRAY(mpAnimateVertex);
+		SAFE_DELETE_ARRAY(mpAnimateNormal);
 		//スキンウェイトの削除
 		for (int i = 0; i < mSkinWeights.size(); i++){
 			delete mSkinWeights[i];
@@ -136,6 +144,8 @@ public:
 
 	//読み込み処理
 	void Init(CModelX *model);
+
+	void AnimateVertex(CModelX *model);
 
 	void Render();
 };
@@ -203,6 +213,10 @@ public:
 	void Render();
 
 	void AnimateFrame();
+
+	void AnimateVertex();
+
+	void SetSkinWeightFrameIndex();
 
 	//浮動小数点データの取得
 	float GetFloatToken();

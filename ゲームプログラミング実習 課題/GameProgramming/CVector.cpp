@@ -9,10 +9,12 @@ void CVector::Set(float x, float y, float z)
 	mY = y;
 	mZ = z;
 }
+
 //デフォルトコンストラクタ
 CVector::CVector()
 : mX(0.0f), mY(0.0f), mZ(0.0f)
 {}
+
 //コンストラクタ
 //CVector(X座標, Y座標, Z座標)
 CVector::CVector(float x, float y, float z)
@@ -41,6 +43,7 @@ CVector CVector::operator-(const CVector &v) {
 float CVector::Length() {
 	return sqrtf(mX * mX + mY * mY + mZ * mZ);
 }
+
 //内積
 float CVector::Dot(const CVector &v) {
 	return mX*v.mX + mY*v.mY + mZ * v.mZ;
@@ -50,18 +53,27 @@ CVector CVector::Normalize() {
 	//ベクトルの大きさで割ったベクトルを返す（長さ1のベクトル）
 	return *this * (1.0f / Length());
 }
+
 //外積
 CVector CVector::Cross(const CVector &v) {
 	return CVector(mY*v.mZ - mZ*v.mY, mZ*v.mX - mX*v.mZ, mX*v.mY - mY*v.mX);
 }
+
 //*演算子のオーバーロード
 //CVector * float の演算結果を返す
 CVector CVector::operator*(const float &f) {
 	return CVector(mX * f, mY * f, mZ * f);
 }
+
 //+演算しのオーバーロード
 //CVector + CVector の演算結果を返す
 CVector CVector::operator+(const CVector &v)
 {
 	return CVector(mX + v.mX, mY + v.mY, mZ + v.mZ);
+}
+
+//+=演算子のオーバーロード
+//CVector1 += CVector2 の演算を行う
+void CVector::operator+=(const CVector &v){
+	CVector(mX += v.mX,mY += v.mY,mZ += v.mZ);
 }
