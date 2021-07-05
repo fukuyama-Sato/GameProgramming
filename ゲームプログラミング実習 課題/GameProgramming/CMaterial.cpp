@@ -18,6 +18,8 @@ CMaterial::CMaterial()
 CMaterial::CMaterial(CModelX *model)
 :mpTextureFilename(0)
 {
+	//CModelXにマテリアルを追加
+	model->mMaterial.push_back(this);
 	model->GetToken();	// { ? Name
 	if (strcmp(model->mToken, "{") != 0){
 		//{ではないときはマテリアル名
@@ -87,6 +89,7 @@ void CMaterial::LoadTexture(char *file)
 {
 	mTexture.Load(file);
 }
+
 //マテリアルを無効にする
 void CMaterial::Disabled()
 {

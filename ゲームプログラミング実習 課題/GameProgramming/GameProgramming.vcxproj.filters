@@ -211,5 +211,13 @@
     <None Include="sample.blend.x">
       <Filter>リソース ファイル</Filter>
     </None>
+    <None Include="ラグナ.x">
+      <Filter>リソース ファイル</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ラグナ.tga">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
 </Project>
