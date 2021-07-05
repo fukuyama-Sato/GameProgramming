@@ -26,32 +26,32 @@ CMaterial::CMaterial(CModelX *model)
 		strcpy(mName, model->mToken);
 		model->GetToken();	//{
 	}
-	printf("%s\n",mName);
+	//printf("%s\n",mName);
 	mDiffuse[0] = model->GetFloatToken();
 	mDiffuse[1] = model->GetFloatToken();
 	mDiffuse[2] = model->GetFloatToken();
 	mDiffuse[3] = model->GetFloatToken();
-	printf("Diffuse:%9f", mDiffuse[0]);
-	printf("%9f", mDiffuse[1]);
-	printf("%9f", mDiffuse[2]);
-	printf("%9f\n", mDiffuse[3]);
+	//printf("Diffuse:%9f", mDiffuse[0]);
+	//printf("%9f", mDiffuse[1]);
+	//printf("%9f", mDiffuse[2]);
+	//printf("%9f\n", mDiffuse[3]);
 
 	mPower = model->GetFloatToken();
-	printf("Power:%f\n", mPower);
+	//printf("Power:%f\n", mPower);
 
 	mSpecular[0] = model->GetFloatToken();
 	mSpecular[1] = model->GetFloatToken();
 	mSpecular[2] = model->GetFloatToken();
-	printf("Specular:%9f", mSpecular[0]);
-	printf("%9f", mSpecular[1]);
-	printf("%9f\n", mSpecular[2]);
+	//printf("Specular:%9f", mSpecular[0]);
+	//printf("%9f", mSpecular[1]);
+	//printf("%9f\n", mSpecular[2]);
 
 	mEmissive[0] = model->GetFloatToken();
 	mEmissive[1] = model->GetFloatToken();
 	mEmissive[2] = model->GetFloatToken();
-	printf("Emissive:%9f", mEmissive[0]);
-	printf("%9f", mEmissive[1]);
-	printf("%9f\n", mEmissive[2]);
+	//printf("Emissive:%9f", mEmissive[0]);
+	//printf("%9f", mEmissive[1]);
+	//printf("%9f\n", mEmissive[2]);
 
 	model->GetToken();	// TextureFilename or }
 
@@ -61,6 +61,10 @@ CMaterial::CMaterial(CModelX *model)
 		model->GetToken();	//File name
 		mpTextureFilename = new char[strlen(model->mToken) + 1];
 		strcpy(mpTextureFilename, model->mToken);
+		
+		//テクスチャファイルの読み込み
+		mTexture.Load(mpTextureFilename);
+
 		model->GetToken();	// }
 		model->GetToken();	// }
 	}

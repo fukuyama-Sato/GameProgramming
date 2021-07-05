@@ -12,7 +12,7 @@ void CModelX::Load(char *file){
 
 	fp = fopen(file, "rb");	//ファイルをオープン
 	if (fp == NULL){	//エラーチェック
-		printf("fopen error:%s\n", file);
+		//printf("fopen error:%s\n", file);
 		return;
 	}
 
@@ -180,7 +180,7 @@ CModelXFrame::CModelXFrame(CModelX* model){
 
 //デバッグバージョンのみ有効
 #ifdef _DEBUG
-	printf("%s\n", mpName);
+	//printf("%s\n", mpName);
 	mTransformMatrix.Print();
 #endif
 	
@@ -365,7 +365,7 @@ void CMesh::Init(CModelX *model){
 	//頂点の取得
 	mVertexNum = model->GetIntToken();
 
-	printf("VertexNum:%i\n", mVertexNum);
+	//printf("VertexNum:%i\n", mVertexNum);
 	//頂点数分エリア確保
 	mpVertex = new CVector[mVertexNum];
 	mpAnimateVertex = new CVector[mVertexNum];
@@ -374,12 +374,12 @@ void CMesh::Init(CModelX *model){
 		mpVertex[i].mX = model->GetFloatToken();
 		mpVertex[i].mY = model->GetFloatToken();
 		mpVertex[i].mZ = model->GetFloatToken();
-		printf("%10f", mpVertex[i].mX);
-		printf("%10f", mpVertex[i].mY);
-		printf("%10f\n", mpVertex[i].mZ);
+		//printf("%10f", mpVertex[i].mX);
+		//printf("%10f", mpVertex[i].mY);
+		//printf("%10f\n", mpVertex[i].mZ);
 	}
 	mFaceNum = model->GetIntToken();	//面積読み込み
-	printf("FaceNum:%i\n", mVertexNum);
+	//printf("FaceNum:%i\n", mVertexNum);
 	//頂点数は1面に3頂点
 	mpVertexIndex = new int[mFaceNum * 3];
 	for (int i = 0; i < mFaceNum * 3; i += 3){
@@ -387,9 +387,9 @@ void CMesh::Init(CModelX *model){
 		mpVertexIndex[i] = model->GetIntToken();
 		mpVertexIndex[i + 1] = model->GetIntToken();
 		mpVertexIndex[i + 2] = model->GetIntToken();
-		printf("%3i", mpVertexIndex[i]);
-		printf("%3i", mpVertexIndex[i + 1]);
-		printf("%3i\n", mpVertexIndex[i + 2]);
+		//printf("%3i", mpVertexIndex[i]);
+		//printf("%3i", mpVertexIndex[i + 1]);
+		//printf("%3i\n", mpVertexIndex[i + 2]);
 	}
 
 	//文字が無くなったら終わり
@@ -414,7 +414,7 @@ void CMesh::Init(CModelX *model){
 
 			//法線数 = 面数 × 3
 			mNormalNum = model->GetIntToken() * 3;	//FaceNum
-			printf("NormalNum:%i\n", mNormalNum);
+			//printf("NormalNum:%i\n", mNormalNum);
 
 			int ni;
 			//頂点毎に法線データを設定する
@@ -433,9 +433,9 @@ void CMesh::Init(CModelX *model){
 				mpNormal[i + 2] = pNormal[ni];
 
 				for (int c = 0; c < 3; c++){
-					printf("%10f", mpNormal[i + c].mX);
-					printf("%10f", mpNormal[i + c].mY);
-					printf("%10f\n", mpNormal[i + c].mZ);
+					//printf("%10f", mpNormal[i + c].mX);
+					//printf("%10f", mpNormal[i + c].mY);
+					//printf("%10f\n", mpNormal[i + c].mZ);
 				}
 
 			}
@@ -562,7 +562,7 @@ CSkinWeights::CSkinWeights(CModelX *model)
 	//フレーム名エリア確保,設定
 	mpFrameName = new char[strlen(model->mToken) + 1];
 	strcpy(mpFrameName, model->mToken);
-	printf("SkinWeights\ %s\n", mpFrameName);
+	//printf("SkinWeights\ %s\n", mpFrameName);
 	//頂点番号数取得
 	mIndexNum = model->GetIntToken();
 	//頂点番号数が0を超える
@@ -578,16 +578,16 @@ CSkinWeights::CSkinWeights(CModelX *model)
 			mpWeight[i] = model->GetFloatToken();
 
 		for (int i = 0; i < mIndexNum; i++){
-			printf("%d", mpIndex[i]);
-			printf("%10f\n", mpWeight[i]);
+			//printf("%d", mpIndex[i]);
+			//printf("%10f\n", mpWeight[i]);
 		}
 	}
 	//オフセット行列取得
 	for (int i = 0; i < 16; i++){
 		mOffset.mF[i] = model->GetFloatToken();
-		printf("%10f", mOffset.mF[i]);
+		//printf("%10f", mOffset.mF[i]);
 		if (i == 3 || i == 7 || i == 11 || i == 15){
-			printf("\n");
+			//printf("\n");
 		}
 	}
 	model->GetToken();	//}
@@ -608,7 +608,7 @@ CAnimationSet::CAnimationSet(CModelX *model)
 	//アニメーションセット名を退避
 	mpName = new char[strlen(model->mToken) + 1];
 	strcpy(mpName, model->mToken);
-	printf("Animation:%s\n", mpName);
+	//printf("Animation:%s\n", mpName);
 	model->GetToken();	// {
 
 	while (*model->mpPointer != '\0'){
@@ -643,7 +643,7 @@ CAnimation::CAnimation(CModelX *model)
 	model->GetToken();	//FrameName
 	mpFrameName = new char[strlen(model->mToken) + 1];
 	strcpy(mpFrameName, model->mToken);
-	printf("Animation:%s\n",mpFrameName);
+	//printf("Animation:%s\n",mpFrameName);
 	mFrameIndex = model->FindFrame(model->mToken)->mIndex;
 	model->GetToken();	// }
 
@@ -738,9 +738,9 @@ CAnimation::CAnimation(CModelX *model)
 			if (i == 0){
 				for (int j = 0; j < 4; j++){
 					for (int n = 0; n < 4; n++){
-						printf("%10f", mpKey[i].mMatrix.mM[j][n]);
+						//printf("%10f", mpKey[i].mMatrix.mM[j][n]);
 						if (n == 3){
-							printf("\n");
+							//printf("\n");
 						}
 					}
 				}
