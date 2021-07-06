@@ -1,5 +1,10 @@
 #include"CXCharacter.h"
 
+CXCharacter::CXCharacter(){
+	mScale = CVector(1.0f, 1.0f, 1.0f);
+}
+
+
 /* Init
   初期化処理*/
 void CXCharacter::Init(CModelX *model){
@@ -69,6 +74,14 @@ void CXCharacter::Update(CMatrix &matrix){
 	mpModel->mFrame[0]->AnimateCombined(&matrix);
 	//頂点にアニメーションを適用する
 	mpModel->AnimateVertex();
+}
+
+//更新処理
+void CXCharacter::Update(){
+	//変換行列の更新
+	CTransform::Update();
+	//アニメーションを更新する
+	Update(mMatrix);
 }
 
 /* Render

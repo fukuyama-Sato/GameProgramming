@@ -3,8 +3,9 @@
 
 #include"CModelX.h"
 #include"CMatrix.h"
+#include"CCharacter.h"
 
-class CXCharacter{
+class CXCharacter : public CCharacter{
 public:
 
 	CModelX *mpModel;
@@ -13,12 +14,20 @@ public:
 	float mAnimationFrame;
 	float mAnimationFrameSize;
 
+	CXCharacter();
+
 	//初期化処理
 	void Init(CModelX *modelx);
+
 	//アニメーションの変更
 	void ChangeAnimation(int index, bool loop, float framsize);
+
 	//更新処理
 	void Update(CMatrix &m);
+
+	//更新処理
+	void Update();
+
 	//描画処理
 	void Render();
 };

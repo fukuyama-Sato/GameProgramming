@@ -10,11 +10,13 @@
 //
 #include "CMaterial.h"
 //
+#include "CXPlayer.h"
+//
 #include "CXCharacter.h"
 
 CMatrix Matrix;
 
-CXCharacter mCharacter;
+CXPlayer mPlayer;
 
 CSceneGame::~CSceneGame() {
 
@@ -24,23 +26,16 @@ void CSceneGame::Init() {
 	//3Dモデルファイルの読み込み
 	CRes::sModelX.Load(MODEL_FILE);
 	//キャラクターにモデルを設定
-	mCharacter.Init(&CRes::sModelX);
+	mPlayer.Init(&CRes::sModelX);
 	//テキストフォントの読み込みと設定
 	mFont.LoadTexture("FontG.tga", 1, 4096 / 64);
 
 }
 
-int n = 0;
-
 void CSceneGame::Update() {
-	if (mCharacter.mAnimationFrame >= mCharacter.mAnimationFrameSize){
-		n++;
-	}
-	//アニメーションを切り替える
-	mCharacter.ChangeAnimation(n, true, 60);
 
 	//キャラクタークラスの更新
-	mCharacter.Update(CMatrix());
+	mPlayer.Update();
 
 
 	//カメラのパラメータを作成する
@@ -75,7 +70,7 @@ void CSceneGame::Update() {
 	glMultMatrixf(Matrix.mF);
 
 	//モデル描画
-	mCharacter.Render();
+	mPlayer.Render();
 
 	//2D描画開始
 	CUtil::Start2D(0, 800, 0, 600);
