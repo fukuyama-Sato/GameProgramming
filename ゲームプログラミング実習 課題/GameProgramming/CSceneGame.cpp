@@ -9,8 +9,12 @@
 #include "CKey.h"
 //
 #include "CMaterial.h"
+//
+#include "CXCharacter.h"
 
 CMatrix Matrix;
+
+CXCharacter mCharacter;
 
 CSceneGame::~CSceneGame() {
 
@@ -19,38 +23,25 @@ CSceneGame::~CSceneGame() {
 void CSceneGame::Init() {
 	//3Dモデルファイルの読み込み
 	CRes::sModelX.Load(MODEL_FILE);
+	//キャラクターにモデルを設定
+	mCharacter.Init(&CRes::sModelX);
 	//テキストフォントの読み込みと設定
 	mFont.LoadTexture("FontG.tga", 1, 4096 / 64);
 
 }
 
+int n = 0;
 
 void CSceneGame::Update() {
+	if (mCharacter.mAnimationFrame >= mCharacter.mAnimationFrameSize){
+		n++;
+	}
+	//アニメーションを切り替える
+	mCharacter.ChangeAnimation(n, true, 60);
 
-	//アニメーションの時間を加算
-	CRes::sModelX.mAnimationSet[0]->mTime += 1.0f;
-	CRes::sModelX.mAnimationSet[0]->mTime =
-		(int)CRes::sModelX.mAnimationSet[0]->mTime %
-		(int)(CRes::sModelX.mAnimationSet[0]->mMaxTime + 1);
+	//キャラクタークラスの更新
+	mCharacter.Update(CMatrix());
 
-	//最初のアニメーションの重みを1.0にする
-	CRes::sModelX.mAnimationSet[0]->mWeight = 1.0f;
-	//フレームの変換行列をアニメーションで更新する
-	CRes::sModelX.AnimateFrame();
-	//フレームの合成行列を計算する
-	CRes::sModelX.mFrame[0]->AnimateCombined(&Matrix);
-
-//#ifdef _DEBUG
-//	for (int j = 0; j < 6; j++){
-//		printf("Frame:%s\n", CRes::sModelX.mFrame[j]->mpName);
-//		for (int n = 0; n < 4; n++){
-//			for (int t = 0; t < 4; t++){
-//				printf("%10f", CRes::sModelX.mFrame[j]->mCombinedMatrix.mM[n][t]);
-//				if (t == 3)printf("\n");
-//			}
-//		}
-//	}
-//#endif
 
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点、注視点、上方向
@@ -82,10 +73,9 @@ void CSceneGame::Update() {
 
 	//行列設定
 	glMultMatrixf(Matrix.mF);
-	//頂点にアニメーションを適用する
-	CRes::sModelX.AnimateVertex();
+
 	//モデル描画
-	CRes::sModelX.Render();
+	mCharacter.Render();
 
 	//2D描画開始
 	CUtil::Start2D(0, 800, 0, 600);
