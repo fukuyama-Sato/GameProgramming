@@ -3,22 +3,40 @@
 
 void CXPlayer::Update(){
 
-	if (CKey::Push('W')){
-		ChangeAnimation(1, true, 60);
-		mPosition = CVector(0.0f, 0.0f, 0.1f)*mMatrix;
+	//UŒ‚
+	if (CKey::Once(VK_SPACE)){
+		ChangeAnimation(3, false, 30);
 	}
-
-	else{
+	if (mAnimationIndex == 3 && mAnimationFrame >= mAnimationFrameSize){
+		ChangeAnimation(4, false, 30);
+	}
+	if (mAnimationIndex == 4 && mAnimationFrame >= mAnimationFrameSize){
 		ChangeAnimation(0, true, 60);
 	}
-
-	if (CKey::Push('A')){
-		mRotation.mY += 2;
+	if (mAnimationIndex == 3, 4 && mAnimationFrame < mAnimationFrameSize){
+		mAnimationFrame;
 	}
 
-	if (CKey::Push('D')){
-		mRotation.mY -= 2;
-	}
+	if (mAnimationIndex != 3 && mAnimationIndex != 4){
+		//‘Oi
+		if (CKey::Push('W')){
+			ChangeAnimation(1, true, 60);
+			mPosition = CVector(0.0f, 0.0f, 0.1f)*mMatrix;
+		}
+		//‘Ò‹@
+		else{
+			ChangeAnimation(0, true, 60);
+		}
 
+
+		//¶‰ñ“]
+		if (CKey::Push('A')){
+			mRotation.mY += 2;
+		}
+		//‰E‰ñ“]
+		if (CKey::Push('D')){
+			mRotation.mY -= 2;
+		}
+	}
 	CXCharacter::Update();
 }
