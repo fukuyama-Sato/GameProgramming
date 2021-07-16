@@ -10,6 +10,8 @@
 //
 #include "CMaterial.h"
 //
+#include "CCollisionManager.h"
+//
 #include "CXPlayer.h"
 //
 #include "CXEnemy.h"
@@ -83,6 +85,8 @@ void CSceneGame::Update() {
 
 	//ƒ‚ƒfƒ‹•`‰æ
 	mPlayer.Render();
+	//ƒRƒ‰ƒCƒ_•`‰æ
+	CCollisionManager::Get()->Render();
 
 	//“G‚Ì•`‰æ
 	mEnemy.Render();
