@@ -21,6 +21,8 @@ public:
 
 	void Init(CModelX *model);
 
+	void Collision(CCollider *m, CCollider *o);
+
 
 };
 

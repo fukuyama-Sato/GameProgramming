@@ -52,6 +52,8 @@ void CSceneGame::Update() {
 	//敵の更新
 	mEnemy.Update();
 
+	CCollisionManager::Get()->Collision();
+
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点、注視点、上方向
 	//視点を求める

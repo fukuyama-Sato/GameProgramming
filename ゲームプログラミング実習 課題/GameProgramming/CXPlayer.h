@@ -19,6 +19,7 @@ public:
 		,mColSphereSword(this, nullptr, 
 		CVector(-10.0f, 10.0f, 50.0f), 0.3f)
 	{
+		mTag = EPLAYER;
 	}
 
 	void Init(CModelX *model);
