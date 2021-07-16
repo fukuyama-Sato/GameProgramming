@@ -12,11 +12,15 @@
 //
 #include "CXPlayer.h"
 //
+#include "CXEnemy.h"
+//
 #include "CXCharacter.h"
 
 CMatrix Matrix;
 
 CXPlayer mPlayer;
+
+CXEnemy mEnemy;
 
 CSceneGame::~CSceneGame() {
 
@@ -27,6 +31,12 @@ void CSceneGame::Init() {
 	CRes::sModelX.Load(MODEL_FILE);
 	//キャラクターにモデルを設定
 	mPlayer.Init(&CRes::sModelX);
+
+	//敵の初期位置
+	mEnemy.Init(&CRes::sModelX);
+	//敵の配置
+	mEnemy.mPosition = CVector(7.0f, 0.0f, 0.0f);
+
 	//テキストフォントの読み込みと設定
 	mFont.LoadTexture("FontG.tga", 1, 4096 / 64);
 
@@ -37,6 +47,8 @@ void CSceneGame::Update() {
 	//キャラクタークラスの更新
 	mPlayer.Update();
 
+	//敵の更新
+	mEnemy.Update();
 
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点、注視点、上方向
@@ -71,6 +83,9 @@ void CSceneGame::Update() {
 
 	//モデル描画
 	mPlayer.Render();
+
+	//敵の描画
+	mEnemy.Render();
 
 	//2D描画開始
 	CUtil::Start2D(0, 800, 0, 600);

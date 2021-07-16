@@ -9,12 +9,18 @@ class CXCharacter : public CCharacter{
 public:
 
 	CModelX *mpModel;
+	CMatrix *mpCombinedMatrix;	//‡¬s—ñ‘Ş”ğ
+
 	int mAnimationIndex;
 	bool mAnimationLoopFlg;
 	float mAnimationFrame;
 	float mAnimationFrameSize;
 
 	CXCharacter();
+
+	virtual ~CXCharacter(){
+		SAFE_DELETE_ARRAY(mpCombinedMatrix);
+	}
 
 	//‰Šú‰»ˆ—
 	void Init(CModelX *modelx);

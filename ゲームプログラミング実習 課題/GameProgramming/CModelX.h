@@ -153,6 +153,8 @@ public:
 
 	void AnimateVertex(CModelX *model);
 
+	void AnimateVertex(CMatrix*);
+
 	void Render();
 };
 
@@ -226,6 +228,8 @@ public:
 	void AnimateFrame();
 
 	void AnimateVertex();
+
+	void AnimateVertex(CMatrix*);
 
 	void SetSkinWeightFrameIndex();
 
