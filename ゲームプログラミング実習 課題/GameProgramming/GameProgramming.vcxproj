@@ -154,10 +154,12 @@
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="sample.blend.x" />
+    <None Include="knight\knight_low.X" />
     <None Include="ラグナ.x" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="knight\knight_01.tga" />
+    <Image Include="knight\sword_01.tga" />
     <Image Include="ラグナ.tga" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

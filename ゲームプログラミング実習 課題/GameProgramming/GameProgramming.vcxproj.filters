@@ -226,15 +226,21 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sample.blend.x">
+    <None Include="ラグナ.x">
       <Filter>リソース ファイル</Filter>
     </None>
-    <None Include="ラグナ.x">
+    <None Include="knight\knight_low.X">
       <Filter>リソース ファイル</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="ラグナ.tga">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="knight\knight_01.tga">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="knight\sword_01.tga">
       <Filter>リソース ファイル</Filter>
     </Image>
   </ItemGroup>

@@ -5,9 +5,9 @@
 void CXPlayer::Init(CModelX *model){
 	CXCharacter::Init(model);
 	//çáê¨çsóÒÇÃê›íË
-	mColSphereBody.mpMatrix = &mpCombinedMatrix[8];
-	mColSphereHead.mpMatrix = &mpCombinedMatrix[11];
-	mColSphereSword.mpMatrix = &mpCombinedMatrix[21];
+	mColSphereBody.mpMatrix = &mpCombinedMatrix[9];
+	mColSphereHead.mpMatrix = &mpCombinedMatrix[12];
+	mColSphereSword.mpMatrix = &mpCombinedMatrix[22];
 
 	mColSphereSword.mTag = CCollider::ESWORD;
 }

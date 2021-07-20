@@ -169,8 +169,15 @@ public:
 
 	char* mpName;	//フレーム名前
 	int mIndex;		//フレーム番号
+
 	//コンストラクタ
 	CModelXFrame(CModelX* model);
+
+	//コンストラクタ
+	CModelXFrame()
+		:mpName(nullptr)
+		, mIndex(0){}	//コンストラクタ
+
 	//デストラクタ
 	~CModelXFrame(){
 		//子フレームを全て解放する
@@ -181,6 +188,7 @@ public:
 		//名前のエリアを解放する
 		SAFE_DELETE_ARRAY(mpName);
 	}
+
 	void AnimateCombined(CMatrix* parent);
 
 	void Render();
